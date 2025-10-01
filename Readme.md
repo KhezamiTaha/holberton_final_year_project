@@ -7,6 +7,16 @@ Monorepo containing:
 
 ---
 
+
+### Home Screen
+![Home Screen](screenshots/main.jpg)
+
+### Challenges Screen
+![Challenges Screen](screenshots/levels.jpg)
+
+### Quiz Screen
+![Quiz Screen](screenshots/quiz_screen.jpg)
+
 ## Table of Contents
 
 - [Overview](#overview)
