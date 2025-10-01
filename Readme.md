@@ -9,13 +9,13 @@ Monorepo containing:
 
 
 ### Home Screen
-![Home Screen](screenshots/main.jpg)
+<img src="screenshots/main.jpg" alt="Home Screen" width="300">
 
 ### Challenges Screen
-![Challenges Screen](screenshots/levels.jpg)
+<img src="screenshots/levels.jpg" alt="Challenges Screen" width="300">
 
 ### Quiz Screen
-![Quiz Screen](screenshots/quiz_screen.jpg)
+<img src="screenshots/quiz_screen.jpg" alt="Quiz Screen" width="300">
 
 ## Table of Contents
 
