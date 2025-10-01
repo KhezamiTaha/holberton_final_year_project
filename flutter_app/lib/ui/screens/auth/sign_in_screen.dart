@@ -36,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool isLoading = false;
 
   final emailController = TextEditingController();
+  // * not yet implemened
   final forgotPswdController = TextEditingController();
   final pswdController = TextEditingController();
 
@@ -58,6 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final c = context.read<SystemConfigCubit>();
 
     return BlocListener<SignInCubit, SignInState>(
+      // * will be triggerd by the sign in button
       listener: (context, state) {
         if (state is SignInSuccess &&
             state.authProvider != AuthProviders.email) {
@@ -67,6 +69,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 authStatus: true,
                 isNewUser: state.isNewUser,
               );
+
+              //* if new user navigate to profile screen 
           if (state.isNewUser) {
             context.read<UserDetailsCubit>().fetchUserDetails();
             Navigator.of(context)
@@ -79,6 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
               arguments: false,
             );
           }
+          // * sign in failure
         } else if (state is SignInFailure &&
             state.authProvider != AuthProviders.email) {
           UiUtils.showSnackBar(
@@ -264,12 +269,15 @@ class _SignInScreenState extends State<SignInScreen> {
     ];
   }
 
+
+    // * this will triger the listner Bloc
   Widget showSignIn(BuildContext context) {
     return SizedBox(
       width: context.width,
       height: context.height * 0.055,
       child: BlocConsumer<SignInCubit, SignInState>(
         bloc: context.read<SignInCubit>(),
+        // * emit loading state
         listener: (context, state) async {
           //Exceuting only if authProvider is email
           if (state is SignInSuccess &&
@@ -316,7 +324,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ? () {}
                 : () async {
                     if (_formKey.currentState!.validate()) {
-                      {
+                      { //* handle sign in with email seperatly
                         context.read<SignInCubit>().signInUser(
                               AuthProviders.email,
                               email: emailController.text.trim(),
@@ -328,7 +336,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: state is SignInProgress &&
                     state.authProvider == AuthProviders.email
                 ? const Center(
-                    child: CircularProgressContainer(whiteLoader: true),
+                    child: CircularProgressContainer(whiteLoader: true),  // * show circular loading inside button
                   )
                 : Text(
                     context.tr('loginLbl')!,
@@ -347,6 +355,9 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+
+
+ // * not implemented yet
   Padding forgetPwd() {
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -489,7 +500,7 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
+     // * check if social media google or apple   are enabled in system cubit
   Widget showSocialMedia(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
@@ -531,7 +542,7 @@ class _SignInScreenState extends State<SignInScreen> {
       },
     );
   }
-
+  // * not implemented
   Widget _buildAppleLoginIconButton(BuildContext context) {
     return InkWell(
       child: Container(
@@ -552,7 +563,7 @@ class _SignInScreenState extends State<SignInScreen> {
       onTap: () => context.read<SignInCubit>().signInUser(AuthProviders.apple),
     );
   }
-
+   // * not implemented
   Widget _buildGmailLoginIconButton(BuildContext context) {
     return InkWell(
       child: Container(

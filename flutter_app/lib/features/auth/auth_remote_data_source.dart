@@ -17,7 +17,7 @@ class AuthRemoteDataSource {
     scopes: ['profile', 'email'],
   );
 
-  //to addUser
+  // *  to addUser
   Future<Map<String, dynamic>> addUser({
     required String firebaseId,
     required String type,
@@ -149,7 +149,7 @@ class AuthRemoteDataSource {
     }
   }
 
-//signIn using phone number
+// * signIn using phone number not implemented
   Future<UserCredential> signInWithPhoneNumber({
     required String verificationId,
     required String smsCode,
@@ -173,7 +173,7 @@ class AuthRemoteDataSource {
     String? smsCode,
   }) async {
     try {
-      return switch (authProvider) {
+      return switch (authProvider) {    // * check the type of the auth provider
         AuthProviders.gmail => await signInWithGoogle(),
         AuthProviders.mobile => await signInWithPhoneNumber(
             verificationId: verificationId!,
@@ -210,6 +210,8 @@ class AuthRemoteDataSource {
     return _firebaseAuth.signInWithCredential(credential);
   }
 
+
+  // ? to do
   Future<UserCredential> signInWithApple() async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
@@ -255,7 +257,7 @@ class AuthRemoteDataSource {
   }
 
 
-
+  // ? to do
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
@@ -268,7 +270,7 @@ class AuthRemoteDataSource {
     }
   }
 
-  //create user account taha
+  // * create user account taha  , i will not verify if sign up for the UX
   Future<void> signUpUser(String email, String password) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(

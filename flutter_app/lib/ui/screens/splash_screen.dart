@@ -74,15 +74,22 @@ class _SplashScreenState extends State<SplashScreen>
     _logoAnimationController.forward();
   }
 
+
+  // * fetch configuration of the app
   Future<void> _fetchSystemConfig() async {
     await context.read<SystemConfigCubit>().getSystemConfig();
   }
+
+
 
   Future<void> _navigateToNextScreen() async {
     if (!_systemConfigLoaded) return;
 
     final showIntroSlider =
         context.read<SettingsCubit>().state.settingsModel!.showIntroSlider;
+
+
+      // * check if a user is already logged in
     final currAuthState = context.read<AuthCubit>().state;
 
     if (showIntroSlider) {
@@ -106,6 +113,8 @@ class _SplashScreenState extends State<SplashScreen>
       return;
     }
 
+    
+      // * navigate to home screen , if user or guest 
     if (currAuthState is Authenticated) {
       await Navigator.of(context).pushReplacementNamed(
         Routes.home,

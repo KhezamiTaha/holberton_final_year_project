@@ -39,6 +39,8 @@ class HomeScreen extends StatefulWidget {
             create: (_) => UpdateUserDetailCubit(ProfileManagementRepository()),
           ),
         ],
+
+        // * enter to home screen as user or as guest if isGuest true or false
         child: HomeScreen(isGuest: routeSettings.arguments! as bool),
       ),
     );
@@ -138,6 +140,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         arguments: widget.isGuest,
       );
 
+
+
+   // * show login dialog every time is not logged in for UX
   Future<void> _showLoginDialog() {
     return showLoginDialog(
       context,

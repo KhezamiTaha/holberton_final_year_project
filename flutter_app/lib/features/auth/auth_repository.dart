@@ -43,7 +43,7 @@ class AuthRepository {
   }
 
   //First we signing user with given provider then add user details
-  Future<({bool isNewUser, User user})> signInUser(
+  Future<({bool isNewUser, User user})> signInUser(  // * sign in user triggerd by cubit start sign in
     AuthProviders authProvider, {
     required String email,
     required String password,
@@ -51,7 +51,7 @@ class AuthRepository {
     required String smsCode,
   }) async {
     try {
-      final userCredentials = await _authRemoteDataSource.signInUser(
+      final userCredentials = await _authRemoteDataSource.signInUser(  //* remote firebase , will get user credentials
         authProvider,
         email: email,
         password: password,
@@ -59,9 +59,13 @@ class AuthRepository {
         verificationId: verificationId,
       );
 
-      final user = userCredentials.user;
-      final additionalUserInfo = userCredentials.additionalUserInfo!;
-      var isNewUser = additionalUserInfo.isNewUser;
+      final user = userCredentials.user; //* object 1
+      final additionalUserInfo = userCredentials.additionalUserInfo!;  //* object 2
+
+
+
+
+      var isNewUser = additionalUserInfo.isNewUser;  // * i will need that in panel
 
       final firebaseUser = FirebaseAuth.instance.currentUser!;
 
@@ -85,10 +89,10 @@ class AuthRepository {
       var userExists = !isNewUser;
 
       if (authProvider == AuthProviders.email) {
-        userExists = await _authRemoteDataSource.isUserExist(userUid);
+        userExists = await _authRemoteDataSource.isUserExist(userUid); 
       }
 
-      if (!userExists) {
+      if (!userExists) { // * if the user do not exist ===> new user
         isNewUser = true;
         final registeredUser = await _authRemoteDataSource.addUser(
           email: userEmail,
@@ -102,25 +106,35 @@ class AuthRepository {
         await AuthLocalDataSource.setJwtToken(
           registeredUser['api_token'].toString(),
         );
-      } else {
+      } else { // * user is already registered
         final jwtToken = await _authRemoteDataSource.getJWTTokenOfUser(
           firebaseId: userUid,
           type: authProvider.name,
         );
 
-        await AuthLocalDataSource.setJwtToken(jwtToken);
+        await AuthLocalDataSource.setJwtToken(jwtToken);  // * storage the JWT
         await _authRemoteDataSource.updateFcmId(
           firebaseId: userUid,
           userLoggingOut: false,
         );
       }
 
-      return (user: user, isNewUser: isNewUser);
+      return (user: user, isNewUser: isNewUser);  //* return to the cubit
     } catch (e) {
       await signOut(authProvider);
       throw AuthException(errorMessageCode: e.toString());
     }
   }
+  
+
+
+
+
+
+
+
+
+
 
   //to signUp user
   Future<void> signUpUser(String email, String password) async {

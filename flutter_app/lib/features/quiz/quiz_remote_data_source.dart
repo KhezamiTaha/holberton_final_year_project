@@ -71,18 +71,7 @@ class QuizRemoteDataSource {
         subCategoryKey: subcategoryId,
         levelKey: level,
       };
-      if (languageId.isEmpty) {
-        body.remove(languageIdKey);
-      }
-      if (categoryId.isEmpty) {
-        body.remove(categoryKey);
-      }
-      if (subcategoryId.isEmpty) {
-        body.remove(subCategoryKey);
-      }
-      if (subcategoryId.isNotEmpty) {
-        body.remove(categoryKey);
-      }
+
 
       final response = await http.post(
         Uri.parse(getQuestionsByLevelUrl),

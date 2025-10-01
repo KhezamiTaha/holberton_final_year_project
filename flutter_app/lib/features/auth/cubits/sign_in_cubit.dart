@@ -45,12 +45,12 @@ class SignInCubit extends Cubit<SignInState> {
     AuthProviders authProvider, {
     String email = '',
     String verificationId = '',
-    String smsCode = '',
+    String smsCode = '',  // * not used here
     String password = '',
   }) {
     emit(SignInProgress(authProvider));
 
-    _authRepository
+    _authRepository  //* go to the repo to sign in
         .signInUser(
       authProvider,
       email: email,
@@ -59,7 +59,7 @@ class SignInCubit extends Cubit<SignInState> {
       verificationId: verificationId,
     )
         .then((v) async {
-      await FirebaseAnalytics.instance.logLogin(loginMethod: authProvider.name);
+      await FirebaseAnalytics.instance.logLogin(loginMethod: authProvider.name); //* not in use
 
       emit(
         SignInSuccess(

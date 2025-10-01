@@ -15,7 +15,7 @@ const packageName = 'com.holbertonpfe.quiz';
 /// Add your database url
 // NOTE: make sure to not add '/' at the end of url
 // NOTE: make sure to check if admin panel is http or https
-const databaseUrl = 'https://holbertonquiz.mobicomx.me';
+const databaseUrl = 'https://holbertonpfe.mobicomx.me';
 
 // Enter 2 Letter ISO Country Code
 const defaultCountryCodeForPhoneLogin = 'TN';
